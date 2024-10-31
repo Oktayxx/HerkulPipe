@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+
+    // Поля, доступные для массового заполнения
+    protected $fillable = [
+        'name',
+        'content',
+        'image',
+        'price',
+        'published',
+        'created_at',
+        'updated_at',
+    ];
 }
