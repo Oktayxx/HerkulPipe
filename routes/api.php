@@ -11,11 +11,6 @@ use App\Http\Controllers\RegistrationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// Маршрут для получения текущего пользователя
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
 // Главная страница
 Route::get('/', function () {
     return view('welcome');
@@ -54,11 +49,11 @@ Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
 
 // Маршрут для админ-панели
 Route::get('/admin', [AdminController::class, 'index']);
-Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::post('me', [AuthController::class, 'me']);
-});
 
-Route::post('register', [RegistrationController::class ,'register']);
+// Маршруты для аутентификации (login, logout, register)
+Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
+    Route::post('login', [AuthController::class, 'login']);      // Логин
+    Route::post('logout', [AuthController::class, 'logout']);    // Логаут
+    Route::post('register', [AuthController::class, 'register']); // Регистрация
+    Route::post('me', [AuthController::class, 'me']);            // Получение информации о текущем пользователе
+});
